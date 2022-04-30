@@ -3,9 +3,14 @@
 
     <!-- loop through the post object and display its attributes --> 
     {% for post in posts %}
-        <h2>{{ post.title }} </h2>
-        <p> By {{ post.author }} on {{post.date_posted}} </p>
-        <p>{{ post.contents }} </p>
+    <article class="media content-section">
+        <div class="article-metadata">
+            <h2 ><a class="article-title" href="{{ post.get_absolute_url }}">  {{ post.title }} </a></h2>
+            <small class="text-muted">{{ post.date_published|date:"F d, Y" }}</small>
+        </div>
+        <p class="article-content">{{ post.content|truncatewords:30|linebreaks }}</p>
+      </article>
     {% endfor %}
 
 {% endblock content  %}
+

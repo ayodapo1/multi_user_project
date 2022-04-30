@@ -17,9 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from blog import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),
     # forward any request with blog/ to the blog.urls.py
-    path('blog/', include("blog.urls")),
+    path('blog/', include("blog.urls", namespace='blog')),
 ]

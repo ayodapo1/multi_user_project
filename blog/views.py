@@ -1,31 +1,30 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse 
+from .models import Post
 # Create your views here.
 
 def home(request):
     return HttpResponse('<h1>This is the project page</h1>')
 
 def blog_home(request):
-    
-    all_posts = [
-        {
-            'author': 'James',
-            'title': 'Software Engineering',
-            'contents': 'Software engineering is great',
-            'date_posted': 'March 5, 2022'
-        },
+    # retrieve all posts
 
-        {
-            'author': 'Jackie',
-            'title': 'DevOps Engineering on the Rise',
-            'contents': 'CI/CD pipeline, a must have skill!',
-            'date_posted': 'March 6, 2022'
-        }
-    ]
-
+    all_posts = Post.published.all()
+    #all_posts = Post.objects.all()
     return render(request,"blog/home.html", {"posts": all_posts})
+
+def post_details(request, year, month, day, post_slug):
+    # use shortcut to get specific object 
+
+     #status='published',
+    post = get_object_or_404(Post, slug=post_slug,
+                                    date_published__year=year,
+                                    date_published__month=month,
+                                    date_published__day=day)
+    return render(request, 'blog/details.html', {'post':post})
 
 def blog_about(request):
     contents = "Hi, this blog is a platform for several users"
     title = "About"
     return render(request,"blog/about.html", {"about_contents":contents, "title":title})
+
