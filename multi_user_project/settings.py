@@ -27,13 +27,16 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['nfonsang.com', 'localhost', '127.0.0.1']
+
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'blog.apps.BlogConfig',
+    'users.apps.UsersConfig',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -121,9 +124,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/' # media url 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# to be able to return message sucess after registering an account
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+# redirect users to blog_home when they login
+LOGIN_REDIRECT_URL = 'blog:blog_home'
+# for any views function with required login
+# redirect users to login when that function is called
+LOGIN_URL = 'login'
